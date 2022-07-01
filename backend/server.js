@@ -5,6 +5,7 @@ const dealData = require('./dealData')
 const productData = require('./productData')
 const mongoose = require('mongoose');
 const User = require('./Model/usermodel.js')
+const Storename = require('./Model/storenamemodel.js')
 const bcrypt = require('bcrypt');
 
 
@@ -66,12 +67,49 @@ app.post('/login',async function(req,res){
     }
 })
 
-app.put('/vendor/:id',async (req,res)=>{
-    console.log(req.params)
-    const data = await User.findByIdAndUpdate(req.params.id,{idVendor: true},function (err,docs){
+app.put('/vendor/:id', (req,res)=>{
+     User.findByIdAndUpdate(req.params.id,{idVendor: true},function (err,docs){
         if(err){
             console.log(err)
         }else{
+            console.log(docs)
+        }
+    })
+})
+
+app.post('/storename',(req,res)=>{
+    let storenameInfo = {
+        storename: req.body.storename,
+        owner: req.body.owner,
+        ownername: req.body.ownername
+    }
+    const storename = new Storename(storenameInfo)
+    storename.save()
+    res.send(storename)
+})
+
+app.get('/storename/:id',async(req,res)=>{
+        const data = await Storename.find({owner:req.params.id})
+    res.send(data)
+})
+
+app.put('/storename',(req,res)=>{
+    Storename.findByIdAndUpdate(req.body.id,{storename: req.body.storename},function (err,docs){
+        if(err){
+            console.log(err)
+        }else{
+            console.log(docs)
+        }
+    })
+})
+
+app.delete('/storename/:id',(req,res)=>{
+    console.log(req.params)
+    Storename.findByIdAndDelete(req.params.id,function (err,docs){
+        if(err){
+            console.log(err)
+        }else{
+            res.send('delete complete')
             console.log(docs)
         }
     })
