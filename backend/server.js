@@ -6,6 +6,7 @@ const productData = require('./productData')
 const mongoose = require('mongoose');
 const User = require('./Model/usermodel.js')
 const Storename = require('./Model/storenamemodel.js')
+const Product = require('./Model/productmodel.js')
 const bcrypt = require('bcrypt');
 
 
@@ -68,11 +69,11 @@ app.post('/login',async function(req,res){
 })
 
 app.put('/vendor/:id', (req,res)=>{
-     User.findByIdAndUpdate(req.params.id,{idVendor: true},function (err,docs){
+     User.findByIdAndUpdate(req.params.id,{isVendor: true},{new: true},function (err,docs){
         if(err){
             console.log(err)
         }else{
-            console.log(docs)
+            res.send(docs)
         }
     })
 })
@@ -113,6 +114,20 @@ app.delete('/storename/:id',(req,res)=>{
             console.log(docs)
         }
     })
+})
+
+app.post('/productupload',(req,res)=>{
+    productuploadInfo ={
+        name:req.body.name,
+        brand:req.body.brand,
+        category:req.body.category,
+        price:req.body.price,
+        color:req.body.color,
+        size:req.body.size,
+        description:req.body.description
+    }
+    const productupload = new Product(productuploadInfo)
+    productupload.save()
 })
 
 app.listen(8000,()=>{
