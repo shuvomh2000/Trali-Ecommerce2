@@ -36,9 +36,7 @@ app.get('/deal', function(req,res){
     res.send(dealData)
 })
 
-app.get('/products', function(req,res){
-    res.send(productData)
-})
+
 
 app.post('/Registration', function(req,res){
     bcrypt.hash(req.body.password, 10, function(err, hash) {
@@ -128,6 +126,12 @@ app.post('/productupload',(req,res)=>{
     }
     const productupload = new Product(productuploadInfo)
     productupload.save()
+})
+
+app.get('/products',async function(req,res){
+    let data = await Product.find({})
+    console.log(data)
+    res.send(data)
 })
 
 app.listen(8000,()=>{
