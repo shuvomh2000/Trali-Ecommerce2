@@ -146,6 +146,11 @@ app.post('/productposition', (req,res)=>{
     res.send(ProductPosition)
 })
 
+app.get('/productposition',async (req,res)=>{
+    let data = await Productposition.find({})
+    res.send(data)
+})
+
 app.listen(8000,()=>{
     console.log('server running on port 8000')
 })
