@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const User = require('./Model/usermodel.js')
 const Storename = require('./Model/storenamemodel.js')
 const Product = require('./Model/productmodel.js')
+const Productposition = require('./Model/productpositionmodel.js')
+
 const bcrypt = require('bcrypt');
 
 
@@ -132,6 +134,16 @@ app.get('/products',async function(req,res){
     let data = await Product.find({})
     console.log(data)
     res.send(data)
+})
+
+app.post('/productposition', (req,res)=>{
+    console.log(req.body.name)
+    let ProductPositionInfo ={
+        label : req.body.name
+    }
+    const ProductPosition = new Productposition(ProductPositionInfo)
+    ProductPosition.save()
+    res.send(ProductPosition)
 })
 
 app.listen(8000,()=>{
