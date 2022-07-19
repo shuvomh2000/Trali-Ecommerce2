@@ -14,6 +14,13 @@ const productschema = new Schema({
         type: String,
         requied: true
     },
+    position:{
+        type: String,
+    },
+    image:{
+        type: String,
+        requied: true
+    },
     price:{
         type: Number,
         requied: true

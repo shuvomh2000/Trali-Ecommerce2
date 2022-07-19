@@ -8,6 +8,7 @@ const User = require('./Model/usermodel.js')
 const Storename = require('./Model/storenamemodel.js')
 const Product = require('./Model/productmodel.js')
 const Productposition = require('./Model/productpositionmodel.js')
+const Coupon = require('./Model/couponModel.js')
 
 const bcrypt = require('bcrypt');
 
@@ -16,11 +17,9 @@ const cors = require('cors')
 const app = express()
 app.use(cors())
 app.use(express.json())
-mongoose.connect('mongodb+srv://shuvomh:01738622011@cluster0.onlmngs.mongodb.net/trali?retryWrites=true&w=majority',()=>{
+mongoose.connect('mongodb+srv://shuvomh:01738622011@cluster0.onlmngs.mongodb.net/trali2?retryWrites=true&w=majority',()=>{
     console.log("DB Connected")
 });
-
-
 
 app.get('/', function (req, res) {
   res.send('Hello World')
@@ -120,6 +119,7 @@ app.post('/productupload',(req,res)=>{
     productuploadInfo ={
         name:req.body.name,
         brand:req.body.brand,
+        image:req.body.image,
         category:req.body.category,
         price:req.body.price,
         color:req.body.color,
@@ -149,6 +149,15 @@ app.post('/productposition', (req,res)=>{
 app.get('/productposition',async (req,res)=>{
     let data = await Productposition.find({})
     res.send(data)
+})
+
+app.post('/coupon',async (req,res)=>{
+    let couponInfo = {
+        coupon: req.body.coupon,
+        discount: req.body.discount,
+    }
+    const coupon = new Coupon(couponInfo)
+    coupon.save()
 })
 
 app.listen(8000,()=>{
