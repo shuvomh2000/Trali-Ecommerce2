@@ -53,7 +53,8 @@ app.post('/Registration', function(req,res){
 })
 
 app.post('/login',async function(req,res){
-    const data = await User.find({email:req.body.email})
+    const data = await User.find({Email:req.body.email})
+    console.log(req.body.email)
     if(data[0]){
         bcrypt.compare(req.body.password, data[0].Password, function(err, result) {
             if(result){
@@ -160,6 +161,18 @@ app.post('/coupon',async (req,res)=>{
     coupon.save()
 })
 
+app.get('/coupon/:coupon',async (req,res)=>{
+  let data = await Coupon.find({coupon: req.params.coupon})
+  res.send(data)
+})
+
+app.get('/productdetails/:id', async (req,res)=>{
+    let data = await Product.findById(req.params.id)
+    console.log(data)
+    res.send(data)
+})
+
 app.listen(8000,()=>{
     console.log('server running on port 8000')
 })
+
