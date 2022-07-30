@@ -166,11 +166,18 @@ app.get('/coupon/:coupon',async (req,res)=>{
   res.send(data)
 })
 
-app.get('/productdetails/:id', async (req,res)=>{
-    let data = await Product.findById(req.params.id)
+app.get('/productdetails/related/:brand', async (req,res)=>{
+    let data = await Product.find({brand:req.params.brand})
     console.log(data)
     res.send(data)
 })
+
+app.get('/productdetails/:id', async (req,res)=>{
+    let data = await Product.findById(req.params.id)
+    res.send(data)
+})
+
+
 
 app.listen(8000,()=>{
     console.log('server running on port 8000')
