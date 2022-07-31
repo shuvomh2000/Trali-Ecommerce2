@@ -178,6 +178,31 @@ app.get('/productdetails/:id', async (req,res)=>{
 })
 
 
+app.get('/shop/brand/zara',async function(req,res){
+    let data = await Product.find({brand:"zara"})
+    res.send(data)
+})
+
+app.get('/shop/brand/easy',async function(req,res){
+    let data = await Product.find({brand:"easy"})
+    res.send(data)
+})
+
+app.get('/shop/category/man',async function(req,res){
+    let data = await Product.find({category:"man"})
+    res.send(data)
+})
+
+app.get('/shop/category/women',async function(req,res){
+    let data = await Product.find({category:"women"})
+    res.send(data)
+})
+
+app.get('/shop/category/kids',async function(req,res){
+    let data = await Product.find({category:"kids"})
+    res.send(data)
+})
+
 
 app.listen(8000,()=>{
     console.log('server running on port 8000')
